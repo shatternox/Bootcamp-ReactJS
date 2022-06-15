@@ -83,7 +83,9 @@ npm start
 
 >> React Itu JS tapi kenapa naro syntax-syntax aneh kyk import, dan nulis html segala?
 - Karena sebelum dilempar ke browser akan ditransform dulu ke bentuk yang bisa dimengerti browser
+- Pake syntax JSX
 
+>> Component in reach is just a Javascript Function
 
-
+>> Aturan code, kalo element html yang pake camelcase itu yg custom bikinan programmer.
 
