@@ -1,7 +1,10 @@
 
-import Expenses from "./components/Expenses";
+import React from "react";
 
-function App() {
+import NewExpense from "./components/NewExpenses/NewExpense";
+import Expenses from "./components/Expenses/Expenses";
+
+const App = () => {
   const expenses = [
     {
       id: "e1",
@@ -29,8 +32,25 @@ function App() {
   // para.textContent = 'This is also visible';
   // document.getElementById('root').append(para)
 
+  // Kalo gk pake JSX code, lebih ribet. Dan harus 'import React from 'react' di semua page yang render element
+  // Makannya React gk bisa pake 2 root element (Harus pake 1 wrapper), karena mana bisa return 2 kali.
+  // return React.createElement(
+  //   'div', {[atribut_div_nya]}, 
+  //   React.createElement ('h2', {}, 'Lets get started'),
+  //   React.createElement(Expenses {expenses=expenses})
+  // );
+
+  const addExpenseHandler = (expenses) => {
+    console.log('in app.js');
+    console.log(expenses);
+  }
+
+
   return (
-    <Expenses expenses={expenses} />
+    <div>
+      <NewExpense onAddExpense={addExpenseHandler} />
+      <Expenses expenses={expenses} />
+    </div>
   );
 }
 
