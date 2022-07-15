@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
@@ -11,20 +11,45 @@ const Login = (props) => {
   const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
 
+  // Bisa gk ush pake dependencies []. Kalo gk pake dependencies [], dia execute tiap render cycle.
+  // Begitu ditambahin dependencies [], dia execute sekali doang.
+  // Kalo dependencies [] nya ditambahin isi kyk misalnya [enteredPassword], dia akan execute tiap enteredPassword berubah
+  useEffect(() => {
+    console.log('Effect Running');
+
+    // Kalo ada dependencies, dan ada return (clean up effect), clean up effectnya trigger pertama sebelum use effectnya kecuali eksekusi pertama
+    // Kalo no dependencies (dependenciesnya empty array []), clean up effectnya cuma trigger kalo componenntnya diremove.
+    return () => {
+      console.log('Effect Cleanup');
+    };
+
+  }, []);
+
+
+  useEffect(() => {
+    console.log("Check always");
+    
+    const identifier = setTimeout(() => {
+      setFormIsValid(
+        enteredEmail.includes('@') && enteredPassword.trim().length > 6
+      );
+    }, 500);
+
+    // Cleanup function, jalan duluan sebelum semua yang di use effect jalan (kecuali pada saat eksekusi use effect pertama)
+    // Ini jadi timeout 500 milisecondnya ke executenya gk cuma sekali, tetapi setiap abis use effect dipanggil juga
+    return () => {
+      console.log("Clean up")
+      clearTimeout(identifier);
+    };
+
+  }, [enteredEmail, enteredPassword]);
+
   const emailChangeHandler = (event) => {
     setEnteredEmail(event.target.value);
-
-    setFormIsValid(
-      event.target.value.includes('@') && enteredPassword.trim().length > 6
-    );
   };
 
   const passwordChangeHandler = (event) => {
     setEnteredPassword(event.target.value);
-
-    setFormIsValid(
-      event.target.value.trim().length > 6 && enteredEmail.includes('@')
-    );
   };
 
   const validateEmailHandler = () => {

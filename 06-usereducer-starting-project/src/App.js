@@ -5,25 +5,20 @@ import Home from './components/Home/Home';
 import MainHeader from './components/MainHeader/MainHeader';
 
 function App() {
-
-  
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  
-  // Jalan ketika baru load page (after component re-evaluation), dan ketika ada dependencies yang berubah. Kalau tidak pakai useEffect, nanti infinite loop
   useEffect(() => {
     const storedUserLoggedInInformation = localStorage.getItem('isLoggedIn');
 
-    if(storedUserLoggedInInformation === '1'){
+    if (storedUserLoggedInInformation === '1') {
       setIsLoggedIn(true);
     }
   }, []);
 
-
   const loginHandler = (email, password) => {
     // We should of course check email and password
     // But it's just a dummy/ demo anyways
-    localStorage.setItem('isLoggedIn', '1')
+    localStorage.setItem('isLoggedIn', '1');
     setIsLoggedIn(true);
   };
 
